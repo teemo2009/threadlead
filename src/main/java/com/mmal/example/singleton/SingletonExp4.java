@@ -1,7 +1,6 @@
-package com.mmal.singleton;
+package com.mmal.example.singleton;
 
 import com.mmal.annoations.NotThreadSafe;
-import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -11,26 +10,30 @@ import java.util.concurrent.Semaphore;
 
 /**
  * 懒汉式
- * 双重检测机制
  */
 @Slf4j
-@ThreadSafe
-public class SingletonExp5 {
+@NotThreadSafe
+public class SingletonExp4 {
     //私有化构造函数
-    private SingletonExp5() {
+    private SingletonExp4() {
         log.info("被创建1次");
     }
-    //限制指令重排
-    private static volatile  SingletonExp5 instance = null;
 
-    public  static SingletonExp5 getInstance() {
+    private static SingletonExp4 instance = null;
+
+    public  static SingletonExp4 getInstance() {
         if (instance == null) {
-            synchronized (SingletonExp5.class) {
+            synchronized (SingletonExp4.class) {
                 if (instance == null) {
                     //1.分配对象内存空间
                     //2.初始化对象
                     //3.设置instance指向刚分配的内存
-                    instance = new SingletonExp5();
+
+                    //JVM和CPU优化发生指令重排
+                    //1.分配对象内存空间
+                    //3.设置instance指向刚分配的内存
+                    //2.初始化对象
+                    instance = new SingletonExp4();
                 }
             }
         }
@@ -46,7 +49,7 @@ public class SingletonExp5 {
             service.execute(() -> {
                 try {
                     semaphore.acquire();
-                    SingletonExp5.getInstance();
+                    SingletonExp4.getInstance();
                     semaphore.release();
                     countDownLatch.countDown();
                 } catch (InterruptedException e) {

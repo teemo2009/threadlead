@@ -1,4 +1,4 @@
-package com.mmal.volatiles;
+package com.mmal.example.volatiles;
 
 import com.mmal.annoations.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;

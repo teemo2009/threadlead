@@ -1,4 +1,4 @@
-package com.mmal.atomic;
+package com.mmal.example.atomic;
 
 import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -7,18 +7,16 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicBoolean;
 
-@Slf4j
 @ThreadSafe
-public class AtomicExample1 {
+@Slf4j
+public class AtomicExample6 {
 
-    //请求总数
+    private static AtomicBoolean isHappend=new AtomicBoolean(false);
     public static int clientTotal=5000;
     //并发直线的线程总数
     public static int threadTotal=200;
-    public static AtomicInteger count=new AtomicInteger(0);
-
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService= Executors.newCachedThreadPool();
         final Semaphore semaphore=new Semaphore(threadTotal);
@@ -27,7 +25,7 @@ public class AtomicExample1 {
             executorService.execute(()->{
                 try {
                     semaphore.acquire();
-                    add();
+                    test();
                     semaphore.release();
                 } catch (Exception e) {
                     log.error("exception",e);
@@ -37,10 +35,14 @@ public class AtomicExample1 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("count:{}",count.get());
+        log.info("count:{}",isHappend.get());
     }
 
-    private static void add(){
-        count.incrementAndGet();
+    private static  void test(){
+        System.out.println("test");
+        if(isHappend.compareAndSet(false,true)){
+            log.info("执行了");
+        }
     }
+
 }

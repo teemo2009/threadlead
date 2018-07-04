@@ -1,13 +1,8 @@
-package com.mmal.singleton;
+package com.mmal.example.singleton;
 
 import com.mmal.annoations.Recommend;
 import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Semaphore;
 
 /**
  * 枚举模式

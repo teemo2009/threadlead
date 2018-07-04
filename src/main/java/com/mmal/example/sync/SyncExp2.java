@@ -1,4 +1,4 @@
-package com.mmal.sync;
+package com.mmal.example.sync;
 
 import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;

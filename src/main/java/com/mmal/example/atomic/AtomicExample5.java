@@ -1,10 +1,9 @@
-package com.mmal.atomic;
+package com.mmal.example.atomic;
 
 import com.mmal.annoations.ThreadSafe;
 import lombok.Getter;
 
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;
-import java.util.concurrent.atomic.AtomicReference;
 
 @ThreadSafe
 public class AtomicExample5 {

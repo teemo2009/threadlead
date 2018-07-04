@@ -1,6 +1,6 @@
-package com.mmal.singleton;
+package com.mmal.example.singleton;
 
-import com.mmal.annoations.ThreadSafe;
+import com.mmal.annoations.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
@@ -9,22 +9,24 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 
 /**
- *  饿汉式
- *  类装载的时候就进行实例化
- *  如果初始化方法中有过多的方法时候，启动会非常慢
- *  如果初始化了，不去使用，会浪费资源
+ *  懒汉式
  * */
 @Slf4j
-@ThreadSafe
-public class SingletonExp2 {
+@NotThreadSafe
+public class SingletonExp1 {
     //私有化构造函数
-    private SingletonExp2(){
-        log.info("初始化了一次");
+    private SingletonExp1(){
+
     }
 
-    private static SingletonExp2 instance=new SingletonExp2();
+    private static SingletonExp1 instance=null;
 
-    public static SingletonExp2 getInstance(){
+    public static SingletonExp1 getInstance(){
+        if(instance==null){//多线程不安全——该对象被创建了多次，
+            // 在构造函数的时候，可能会做一些初始化操作，这样会导致一些错误
+            log.info("被创建1次");
+            instance=new SingletonExp1();
+        }
         return instance;
     }
 
@@ -37,7 +39,7 @@ public class SingletonExp2 {
             service.execute(()->{
                 try {
                     semaphore.acquire();
-                    SingletonExp2.getInstance();
+                    SingletonExp1.getInstance();
                     semaphore.release();
                     countDownLatch.countDown();
                 } catch (InterruptedException e) {

@@ -1,4 +1,4 @@
-package com.mmal.publish;
+package com.mmal.example.publish;
 
 import com.mmal.annoations.NotThreadSafe;
 import lombok.extern.slf4j.Slf4j;

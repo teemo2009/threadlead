@@ -1,4 +1,4 @@
-package com.mmal.atomic;
+package com.mmal.example.atomic;
 
 import com.mmal.annoations.ThreadSafe;
 

@@ -1,4 +1,4 @@
-package com.mmal.sync;
+package com.mmal.example.atomic;
 
 import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -7,16 +7,17 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Slf4j
 @ThreadSafe
-public class SyncExp3 {
+public class AtomicExample1 {
 
     //请求总数
     public static int clientTotal=5000;
     //并发直线的线程总数
     public static int threadTotal=200;
-    public static int count=0;
+    public static AtomicInteger count=new AtomicInteger(0);
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService= Executors.newCachedThreadPool();
@@ -36,10 +37,10 @@ public class SyncExp3 {
         }
         countDownLatch.await();
         executorService.shutdown();
-        log.info("count:{}",count);
+        log.info("count:{}",count.get());
     }
 
-    private static synchronized void add(){
-        count++;
+    private static void add(){
+        count.incrementAndGet();
     }
 }

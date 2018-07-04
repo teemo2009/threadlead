@@ -1,4 +1,4 @@
-package com.mmal.atomic;
+package com.mmal.example.atomic;
 
 import com.mmal.annoations.ThreadSafe;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
